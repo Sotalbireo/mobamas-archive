@@ -2,7 +2,7 @@
 
 ## 何？ / Whats?
 
-2023年3月にサービス終了が内定している<sup>[*1](https://twitter.com/imascg_chihiro/status/1556475308106469376)</sup>ゲーム「[アイドルマスターシンデレラガールズ](https://cinderella.idolmaster.jp)」を後世に遺すためのファンメイドサービスです
+ゲーム「[アイドルマスターシンデレラガールズ](https://cinderella.idolmaster.jp)」を後世に遺すためのファンメイドサービスです
 
 ## 実装予定の機能
 
