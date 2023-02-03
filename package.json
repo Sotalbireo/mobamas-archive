@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "ls && nuxt build && mkdir -p .vercel/output/functions/index.func && cp -r data .vercel/output/functions/index.func",
+    "build": "sh -c ./build.sh",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

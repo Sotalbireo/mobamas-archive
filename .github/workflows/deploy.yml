@@ -7,7 +7,7 @@ env:
 on:
   push:
     branches:
-      - master
+      - __NO_EXECUTE__
 
 jobs:
   deploy:
