@@ -67,6 +67,9 @@ export default defineNuxtConfig({
       host: '0.0.0.0',
     },
   },
+  nitro: {
+    // preset: 'vercel',
+  },
   webpack: {
     loaders: {
       cssModules: {
