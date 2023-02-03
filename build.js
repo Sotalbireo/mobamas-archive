@@ -1,6 +1,6 @@
 //@ts-check
 
-import shell from 'shelljs'
+const shell = require('shelljs')
 
 shell.ls('./')
 
