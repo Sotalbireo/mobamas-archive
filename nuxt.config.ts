@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   app: {
     head: {
+      title: 'モバマスアーカイブ（二宮飛鳥編）',
       meta: [
         { charset: 'utf-8' },
         {
