@@ -16,4 +16,4 @@
 
 ---
 
-<small>"アイドルマスター シンデレラガールズ" ©窪岡俊之 ©BANDAI NAMCO Entertainment Inc.</small>
+<small>"アイドルマスター シンデレラガールズ" © 窪岡俊之 ©BANDAI NAMCO Entertainment Inc.</small>

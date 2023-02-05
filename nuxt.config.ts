@@ -8,7 +8,7 @@ export default defineNuxtConfig({
         {
           name: 'viewport',
           content:
-            'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0',
+            'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no',
         },
         { hid: 'description', name: 'description', content: '' },
         { name: 'robots', content: 'none, noarchive' },
@@ -23,16 +23,36 @@ export default defineNuxtConfig({
         { name: 'twitter:title', content: '#二宮飛鳥' },
         {
           name: 'twitter:description',
-          content: process.env.npm_package_description || '',
+          content: '#モバマスアーカイブ #二宮飛鳥',
         },
-        { name: 'twitter:image', content: 'https://imas.absolute-ze.ro/card.jpg' },
+        {
+          name: 'twitter:image',
+          content: 'https://imas.absolute-ze.ro/card.jpg',
+        },
         { name: 'twitter:image:alt', content: 'Asuka NINOMIYA' },
-        { property: 'og:image', content: 'https://imas.absolute-ze.ro/favicon.jpg' },
+        {
+          property: 'og:image',
+          content: 'https://imas.absolute-ze.ro/favicon.jpg',
+        },
       ],
       link: [
-        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
-        { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+        {
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          href: '/apple-touch-icon.png',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '32x32',
+          href: '/favicon-32x32.png',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16',
+          href: '/favicon-16x16.png',
+        },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'manifest', href: '/site.webmanifest' },
       ],
@@ -69,7 +89,7 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
-    // preset: 'vercel',
+    preset: 'vercel',
   },
   webpack: {
     loaders: {
