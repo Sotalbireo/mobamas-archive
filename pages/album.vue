@@ -22,7 +22,7 @@
           class="relative mt-2 bg-white dark:bg-neutral-800 text-black dark:text-gray-50 rounded-xl flex flex-col max-h-1/3 space-y-2"
         >
           <div class="overflow-hidden h-52 rounded-xl">
-            <img src="@/assets/world.webp" class="rounded-xl" />
+            <img src="" class="rounded-xl" />
           </div>
           <h3 class="px-4 text-xl text-center leading-8">
             <RarityBadge
