@@ -3,8 +3,8 @@
     theme="ios"
     class="sm:!w-96 sm:!mx-auto sm:border-x !bg-transparent overflow-hidden"
   >
-    <k-page class="!bg-transparent pb-[44px]">
-      <k-navbar component="nav" :title="appTitle">
+    <k-page class="!bg-transparent">
+      <k-navbar component="nav" :title="appTitle" class="relative">
         <template #left>
           <k-link navbar @click="gotoMystudio()">
             <DeviceTabletIcon class="h-8 w-8 text-sky-600" />
@@ -20,7 +20,7 @@
       <k-toolbar
         :top="false"
         component="nav"
-        class="left-0 right-0 bottom-0 fixed w-full sm:w-96 sm:mx-auto sm:border-x"
+        class="left-0 right-0 bottom-0 sticky w-full sm:w-96 sm:mx-auto sm:border-x"
         inner-class="justify-evenly bg-gradient-to-b from-slate-200 to-slate-400"
       >
         <k-link toolbar @click="$router.back">
