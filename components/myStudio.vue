@@ -1,5 +1,5 @@
 <template>
-  <k-block class="!p-0">
+  <div class="relative mt-8">
     <ul class="grid grid-cols-5 list-none">
       <li v-for="(slab, i) in slabs" :key="i" class="w-full h-auto">
         <a @click.prevent="onClickSlab(i)"
@@ -38,11 +38,11 @@
         </ul>
       </k-card>
     </TransitionRoot>
-  </k-block>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import { kBlock, kCard, kLink } from 'konsta/vue'
+import { kCard, kLink } from 'konsta/vue'
 import { TransitionRoot } from '@headlessui/vue'
 import sample from 'lodash/sampleSize'
 import { XMarkIcon } from '@heroicons/vue/20/solid'

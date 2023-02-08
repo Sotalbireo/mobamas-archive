@@ -3,7 +3,7 @@
     theme="ios"
     class="sm:!w-96 sm:!mx-auto sm:border-x !bg-transparent overflow-hidden"
   >
-    <k-page class="!bg-transparent">
+    <main class="h-full w-full inset-0 overflow-auto absolute bg-transparent">
       <k-navbar component="nav" :title="appTitle" class="relative">
         <template #left>
           <k-link navbar @click="gotoMystudio()">
@@ -16,11 +16,11 @@
           </k-link>
         </template>
       </k-navbar>
-      <NuxtPage />
+      <NuxtPage class="min-h-full mb-[44px]" />
       <k-toolbar
         :top="false"
         component="nav"
-        class="left-0 right-0 bottom-0 sticky w-full sm:w-96 sm:mx-auto sm:border-x"
+        class="left-0 right-0 bottom-0 fixed w-full sm:w-96 sm:mx-auto sm:border-x"
         inner-class="justify-evenly bg-gradient-to-b from-slate-200 to-slate-400"
       >
         <k-link toolbar @click="$router.back">
@@ -39,7 +39,7 @@
           <img src="@/assets/imas_logo.svg" class="h-8 w-10 fill-sky-600" />
         </k-link>
       </k-toolbar>
-    </k-page>
+    </main>
     <SideMenu />
     <InfoSheet />
   </k-app>
