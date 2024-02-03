@@ -18,6 +18,19 @@
       </k-navbar>
 
       <NuxtPage v-if="isReady" />
+      <TransitionRoot
+        :show="!isReady"
+        as="div"
+        enter="transform transition ease-in-out duration-50"
+        enter-from="opacity-0"
+        enter-to="opacity-100"
+        leave="transform transition ease-out duration-200"
+        leave-from="opacity-100"
+        leave-to="opacity-0"
+        class="h-dvh sm:h-screen w-full absolute z-50 inset-0 flex items-center justify-center backdrop-blur bg-black/30"
+      >
+        <div><img src="~/assets/Nino_Loading_8.gif"></div>
+      </TransitionRoot>
 
       <footer class="h-[44px]">
         <k-toolbar
@@ -54,6 +67,7 @@
 
 <script lang="ts" setup>
 import { kApp, kToolbar, kLink, kNavbar } from 'konsta/vue'
+import { TransitionRoot } from '@headlessui/vue'
 import {
   ArrowPathIcon,
   ChevronDoubleLeftIcon,
@@ -61,7 +75,7 @@ import {
   CogIcon,
   ShareIcon,
 } from '@heroicons/vue/24/solid'
-import { useShare } from '@vueuse/core'
+import { promiseTimeout, tryOnBeforeMount, useShare } from '@vueuse/core'
 import InfoSheet from '@/components/infoSheet.vue'
 import ShareMenu from '@/components/shareMenu.vue'
 import LeftSideMenu from '@/components/leftSideMenu.vue'
@@ -75,11 +89,14 @@ const { showMenu: showLeftMenu, isReady } = useSetting()
 const { share } = useShare()
 // const shareMenu = useShareMenu()
 
-await Promise.all([
-  tanzaku.fetch(),
-  thumbnail.fetchId(),
-  thumbnail.fetchBlobs(),
-]).then(() => (isReady.value = true))
+tryOnBeforeMount(async () => {
+  await Promise.all([
+    tanzaku.fetch(),
+    thumbnail.fetchId(),
+    thumbnail.fetchBlobs(),
+    promiseTimeout(3000),
+  ]).then(() => (isReady.value = true))
+})
 
 function openShare() {
   share({

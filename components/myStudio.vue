@@ -79,7 +79,7 @@ async function onChangeSlab(_slotId: number, thumbId: number) {
     thumbList.value![thumbId].indexOf('_') + 1
   )
   const newSlab = addImageHeader(
-    await $fetch<string>(`/api/v1/images/tanzaku/${newSlabId}`)
+    await $fetch(`/api/v1/images/tanzaku/${newSlabId}`)
   )
   tanzakus.value?.splice(_slotId, 1, newSlab)
   tanzakuIds.value.splice(_slotId, 1, newSlabId)
