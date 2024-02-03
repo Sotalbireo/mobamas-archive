@@ -6,9 +6,11 @@ export function useSetting() {
     useOriginalBg: true,
   })
 
+  const isReady = useState('isReady', () => false)
   const showMenu = useState('showMenu', () => false)
 
   return {
+    isReady,
     mypage,
     showMenu,
   }

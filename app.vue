@@ -17,7 +17,7 @@
         </template>
       </k-navbar>
 
-      <NuxtPage />
+      <NuxtPage v-if="isReady" />
 
       <footer class="h-[44px]">
         <k-toolbar
@@ -71,7 +71,7 @@ const menu = useMenu()
 const appTitle = useAppTitle()
 const tanzaku = useTanzaku()
 const thumbnail = useThumbnail()
-const { showMenu: showLeftMenu } = useSetting()
+const { showMenu: showLeftMenu, isReady } = useSetting()
 const { share } = useShare()
 // const shareMenu = useShareMenu()
 
@@ -79,7 +79,7 @@ await Promise.all([
   tanzaku.fetch(),
   thumbnail.fetchId(),
   thumbnail.fetchBlobs(),
-])
+]).then(() => (isReady.value = true))
 
 function openShare() {
   share({

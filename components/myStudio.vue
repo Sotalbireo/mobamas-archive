@@ -3,11 +3,11 @@
   <div v-else class="mt-8" />
   <div class="relative">
     <ul class="grid grid-cols-5 list-none">
-      <li v-for="(slab, i) in slabs" :key="i" class="relative w-full h-auto">
+      <li v-for="(t, i) in tanzakus" :key="i" class="relative w-full h-auto">
         <a :class="slotId == i ? 'before:absolute before:inset-0 before:ring-8 before:ring-pink-500/70 before:ring-inset before:rounded' : ''" @click.prevent="onClickSlab(i)"
           ><img
-            v-if="slab"
-            :src="slab"
+            v-if="t"
+            :src="t"
             class="w-full h-auto"
         /></a>
       </li>
@@ -57,7 +57,6 @@ const { list: thumbList, blobs: thumbBlobs } = useThumbnail()
 const setting = useSetting()
 useAppTitle().value = ''
 
-const slabs = ref<string[]>([])
 const thumbs = computed(() => [...thumbBlobs.value.values()])
 const slotId = ref(-1)
 
@@ -82,7 +81,7 @@ async function onChangeSlab(_slotId: number, thumbId: number) {
   const newSlab = addImageHeader(
     await $fetch<string>(`/api/v1/images/tanzaku/${newSlabId}`)
   )
-  slabs.value.splice(_slotId, 1, newSlab)
+  tanzakus.value?.splice(_slotId, 1, newSlab)
   tanzakuIds.value.splice(_slotId, 1, newSlabId)
   await router.replace({ hash: '#' + tanzakuIds.value.join(',') })
   slotId.value = -1
@@ -99,14 +98,7 @@ if (hash.length === 5 && hash.every((v) => tanzaku.list.value.includes(v))) {
 }
 await router.replace({ hash: '#' + tanzakuIds.value.join(',') })
 
-slabs.value = await (
-  await Promise.all(
-    tanzakuIds.value.map((i) => $fetch(`/api/v1/images/tanzaku/${i}`))
-  )
-).map(addImageHeader)
-// thumbs.value = await (
-//   await Promise.all(
-//     thumbList.value!.map((i) => $fetch(`/api/v1/images/thumb/${i}`))
-//   )
-// ).map(addImageHeader)
+const { data: tanzakus } = await useAsyncData('tanzakus', () => Promise.all(tanzakuIds.value.map((i) => $fetch(`/api/v1/images/tanzaku/${i}`))), {
+  transform: res => res.map(addImageHeader)
+})
 </script>
