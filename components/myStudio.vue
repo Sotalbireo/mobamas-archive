@@ -38,8 +38,10 @@
       <ul
         class="grid grid-cols-4 gap-3 list-none max-h-72 overflow-y-auto pb-4"
       >
-        <li v-for="(t, i) in thumbs" :key="i">
-          <img :src="t" @click="onChangeSlab(slotId, i)" />
+        <li v-for="t in thumbs" :key="t[1]">
+          <a @click="onChangeSlab(slotId, t[0])">
+            <img :src="t[1]" />
+          </a>
         </li>
       </ul>
     </k-card>
@@ -49,6 +51,7 @@
 <script lang="ts" setup>
 import { TransitionRoot } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/20/solid'
+import { until } from '@vueuse/core';
 import { kCard, kLink } from 'konsta/vue'
 import sample from 'lodash/sampleSize'
 
@@ -58,7 +61,7 @@ const { list: thumbList, blobs: thumbBlobs } = useThumbnail()
 const setting = useSetting()
 useAppTitle().value = ''
 
-const thumbs = computed(() => [...thumbBlobs.value.values()])
+const thumbs = computed(() => [...thumbBlobs.value.entries()])
 const slotId = ref(-1)
 
 const tanzakuIds = computed({
@@ -75,15 +78,8 @@ function onClickSlab(_slotId: number) {
   }
 }
 
-async function onChangeSlab(_slotId: number, thumbId: number) {
-  const newSlabId = thumbList.value![thumbId].substring(
-    thumbList.value![thumbId].indexOf('_') + 1
-  )
-  const newSlab = addImageHeader(
-    await $fetch(`/api/v1/images/tanzaku/${newSlabId}`)
-  )
-  tanzakus.value?.splice(_slotId, 1, newSlab)
-  tanzakuIds.value.splice(_slotId, 1, newSlabId)
+async function onChangeSlab(_slotId: number, thumbId: string) {
+  tanzakuIds.value = tanzakuIds.value.toSpliced(_slotId, 1, thumbId.replace(/^[0-9]+_/, ''))
   await router.replace({ hash: '#' + tanzakuIds.value.join(',') })
   slotId.value = -1
 }
@@ -92,20 +88,25 @@ const hash = useRoute().hash.substring(1).split(',')
 
 if (hash.length === 5 && hash.every((v) => tanzakuList.value.includes(v))) {
   tanzakuIds.value = hash
-} else if (tanzakuIds.value.length === 5) {
-  tanzakuIds.value = tanzakuIds.value
-} else {
+} else if (tanzakuIds.value.length !== 5) {
   tanzakuIds.value = sample(tanzakuList.value, 5)
 }
 await router.replace({ hash: '#' + tanzakuIds.value.join(',') })
 
-const { data: tanzakus } = useAsyncData('tanzakus', () =>
+const { data: tanzakus } = await useAsyncData('tanzakus', () =>
   setting.isReady.value && tanzakuIds.value.length === 5
     ? Promise.all(tanzakuIds.value.map((i) => $fetch(`/api/v1/images/tanzaku/${i}`)))
     : Promise.resolve([]),
   {
-    immediate: false,
+    immediate: true,
     transform: res => res.map(r => r ? addImageHeader(r) : ''),
-    watch: [setting.isReady],
+    watch: [setting.isReady, tanzakuIds],
   })
+
+watch(tanzakuList, () => {
+  if (tanzakuIds.value.length !== 5) {
+    tanzakuIds.value = sample(tanzakuList.value, 5)
+    router.replace({ hash: '#' + tanzakuIds.value.join(',') })
+  }
+})
 </script>
