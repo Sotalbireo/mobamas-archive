@@ -1,6 +1,6 @@
 <template>
   <TransitionRoot appear :show="shareMenu" as="template">
-    <Dialog as="div" @close="shareMenu = false" class="relative z-[calc(Infinity)]">
+    <Dialog as="div" @close="shareMenu = false" class="relative z-[9999]">
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"

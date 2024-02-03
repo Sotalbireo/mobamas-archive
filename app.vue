@@ -1,7 +1,7 @@
 <template>
   <k-app
     theme="ios"
-    class="sm:!w-frame sm:!mx-auto sm:border-x !bg-transparent overflow-hidden"
+    class="sm:!w-frame sm:!mx-auto sm:border-x !bg-transparent overflow-hidden border-slate-800"
   >
     <section class="flex flex-col min-h-dvh w-full overflow-y-auto bg-transparent">
       <k-navbar component="header" :title="appTitle" class="relative">

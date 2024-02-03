@@ -5,6 +5,7 @@
         <img :src="t" @click.prevent="">
       </li>
     </ul>
+    <!--
     <TransitionRoot :show="summary">
       <Backdrop @click="summary = false" />
       <TransitionChild
@@ -45,6 +46,7 @@
         </div>
       </TransitionChild>
     </TransitionRoot>
+    -->
   </div>
 </template>
 
