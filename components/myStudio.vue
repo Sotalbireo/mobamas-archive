@@ -14,6 +14,7 @@
     </ul>
   </div>
   <img v-if="useOriginalBg" src="~/assets/bnei/bg_mypage_b.jpg" class="w-full">
+
   <TransitionRoot
     :show="slotId != -1"
     appear
@@ -46,13 +47,13 @@
 </template>
 
 <script lang="ts" setup>
-import { kCard, kLink } from 'konsta/vue'
 import { TransitionRoot } from '@headlessui/vue'
-import sample from 'lodash/sampleSize'
 import { XMarkIcon } from '@heroicons/vue/20/solid'
+import { kCard, kLink } from 'konsta/vue'
+import sample from 'lodash/sampleSize'
 
 const router = useRouter()
-const tanzaku = useTanzaku()
+const { list: tanzakuList } = useTanzaku()
 const { list: thumbList, blobs: thumbBlobs } = useThumbnail()
 const setting = useSetting()
 useAppTitle().value = ''
@@ -89,16 +90,18 @@ async function onChangeSlab(_slotId: number, thumbId: number) {
 
 const hash = useRoute().hash.substring(1).split(',')
 
-if (hash.length === 5 && hash.every((v) => tanzaku.list.value.includes(v))) {
+if (hash.length === 5 && hash.every((v) => tanzakuList.value.includes(v))) {
   tanzakuIds.value = hash
 } else if (tanzakuIds.value.length === 5) {
   tanzakuIds.value = tanzakuIds.value
 } else {
-  tanzakuIds.value = sample(tanzaku.list.value, 5)
+  tanzakuIds.value = sample(tanzakuList.value, 5)
 }
 await router.replace({ hash: '#' + tanzakuIds.value.join(',') })
 
-const { data: tanzakus } = await useAsyncData('tanzakus', () => Promise.all(tanzakuIds.value.map((i) => $fetch(`/api/v1/images/tanzaku/${i}`))), {
-  transform: res => res.map(addImageHeader)
+const { data: tanzakus } = useAsyncData('tanzakus', () => setting.isReady.value ? Promise.all(tanzakuIds.value.map((i) => $fetch(`/api/v1/images/tanzaku/${i}`))) : Promise.resolve([]), {
+  immediate: true,
+  transform: res => res.map(addImageHeader),
+  watch: [setting.isReady],
 })
 </script>

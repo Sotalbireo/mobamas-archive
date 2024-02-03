@@ -91,8 +91,9 @@ export default defineNuxtConfig({
   },
   routeRules: {
     // '/': { ssr: false },
+    '/album': { ssr: false },
   },
-  ssr: false,
+  // ssr: false,
   typescript: {
     typeCheck: true,
   },

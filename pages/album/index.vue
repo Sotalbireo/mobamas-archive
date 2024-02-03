@@ -54,8 +54,7 @@ import { TransitionChild, TransitionRoot } from '@headlessui/vue'
 import Backdrop from '@/components/backdrop.vue'
 import RarityBadge from '@/components/badges/rarity.vue'
 
-const appTitle = useAppTitle()
-appTitle.value = 'アルバム'
+useAppTitle().value = 'アルバム'
 const { blobs } = useThumbnail()
 
 const summary = ref(false)

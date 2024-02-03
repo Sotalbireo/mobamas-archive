@@ -4,7 +4,7 @@
     class="sm:!w-frame sm:!mx-auto sm:border-x !bg-transparent overflow-hidden border-slate-800"
   >
     <section class="flex flex-col min-h-dvh w-full overflow-y-auto bg-transparent">
-      <k-navbar component="header" :title="appTitle" class="relative">
+      <k-navbar component="header" :title="appTitle">
         <template #left>
           <k-link navbar @click="showLeftMenu = true">
             <CogIcon class="size-8 text-sky-600" />
@@ -17,7 +17,7 @@
         </template>
       </k-navbar>
 
-      <NuxtPage v-if="isReady" />
+      <NuxtPage />
       <TransitionRoot
         :show="!isReady"
         as="div"
