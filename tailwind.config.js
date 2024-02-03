@@ -33,6 +33,9 @@ module.exports = konstaConfig({
           '100%': { opacity: '0' },
         },
       },
+      width: {
+        frame: '28rem',
+      },
     },
   },
   plugins: [require('@tailwindcss/aspect-ratio')],

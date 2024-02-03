@@ -7,7 +7,7 @@
     leave="transition-opacity ease-linear duration-200"
     leave-from="opacity-100"
     leave-to="opacity-0"
-    class="fixed z-40 w-full h-full inset-0 bg-black bg-opacity-50"
+    class="fixed z-40 size-full inset-0 bg-black/50"
     aria-hidden="true"
   />
 </template>

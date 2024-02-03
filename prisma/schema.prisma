@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../server/database.db"
+}
+
+model Idol {
+  id String @id @default(cuid())
+  albums Album[]
+  kana String
+  name String
+}
+
+model Album {
+  id String @id @default(cuid())
+  idol Idol @relation(fields: [idolId], references: [id])
+  idolId String
+  comment String
+  eyeline Float
+  name String
+  photograph Bytes
+  rarity Int
+  tanzaku Bytes
+  thumbnail Bytes
+}

@@ -10,12 +10,12 @@
       leave="transform transition ease-in-out duration-200"
       leave-from="translate-y-0"
       leave-to="translate-y-full"
-      class="inset-x-auto bottom-0 z-40 fixed max-w-full overflow-hidden max-h-full bg-md-light-surface dark:bg-md-dark-surface pb-safe sm:w-96"
+      class="inset-x-auto bottom-0 z-40 fixed max-w-full overflow-hidden max-h-full bg-md-light-surface dark:bg-md-dark-surface pb-safe sm:w-frame"
     >
       <k-navbar title="モバマスアーカイブ（二宮飛鳥編）">
         <template #right>
           <k-link navbar @click="infoSheet = false">
-            <XMarkIcon class="h-6 w-6" />
+            <XMarkIcon class="size-6" />
           </k-link>
         </template>
       </k-navbar>
@@ -25,7 +25,6 @@
             当サイトは<NuxtLink
               to="https://www.bandainamcoent.co.jp/info/videopolicy/"
               target="_blank"
-              rel="noopener noreferrer"
               class="underline"
             >
               バンダイナムコエンターテインメントゲーム実況ポリシー </NuxtLink
@@ -33,12 +32,11 @@
           </li>
           <li>
             当サイトに関するご意見ご要望、その他ご連絡などは、<NuxtLink
-              to="https://twitter.com/sota_n"
+              to="https://social.mikutter.hachune.net/sota_n"
               target="_blank"
-              rel="noopener noreferrer"
               class="underline"
             >
-              @sota_n@twitter.com </NuxtLink
+              @sota_n </NuxtLink
             >にお送りください。
           </li>
         </ul>

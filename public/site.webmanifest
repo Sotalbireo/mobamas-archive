@@ -1,6 +1,8 @@
 {
-  "name": "",
-  "short_name": "",
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "モバマスアーカイブ（二宮飛鳥編）",
+  "short_name": "mob@rchive",
+  "description": "R.I.P. Mobam@s 2023.3.30",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -15,5 +17,6 @@
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "orientation": "portrait"
 }

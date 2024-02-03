@@ -19,6 +19,14 @@ export default defineNuxtConfig({
           name: 'format-detection',
           content: 'telephone=no, address=no, email=no',
         },
+        {
+          name: 'apple-mobile-web-app-capable',
+          content: 'yes',
+        },
+        {
+          name: 'mobile-web-app-capable',
+          content: 'yes',
+        },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: '#二宮飛鳥' },
         {
@@ -57,30 +65,46 @@ export default defineNuxtConfig({
         { rel: 'manifest', href: '/site.webmanifest' },
       ],
     },
+    rootId: 'app',
+    rootTag: 'section',
+  },
+  build: {
+    transpile: ['konsta'],
+  },
+  components: {
+    dirs: [],
   },
   css: ['@/assets/tailwind.sass', '@/assets/styles.sass'],
-  modules: [],
   devServer: {
     host: '0.0.0.0',
   },
+  devtools: { enabled: true },
+  modules: [],
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
       cssnano: {
-        preset: ['advanced', { zindex: false }],
+        preset: ['cssnano-preset-advanced', { zindex: false }],
       },
     },
   },
-  build: {
-    transpile: ['konsta'],
+  routeRules: {
+    '/': { ssr: false },
   },
   typescript: {
     typeCheck: true,
   },
   vite: {
+    css: {
+      modules: {
+        generateScopedName: '[local]_[xxhash64:contenthash:base62:6]',
+      },
+    },
+    define: {},
     server: {
       watch: {
+        ignored: /node_modules/,
         usePolling: true,
       },
     },
@@ -90,15 +114,5 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: 'vercel',
-  },
-  webpack: {
-    loaders: {
-      cssModules: {
-        modules: {
-          localIdentName: '[local]_[hash:base62:6]',
-        },
-      },
-    },
-    optimizeCSS: true,
   },
 })
