@@ -99,9 +99,13 @@ if (hash.length === 5 && hash.every((v) => tanzakuList.value.includes(v))) {
 }
 await router.replace({ hash: '#' + tanzakuIds.value.join(',') })
 
-const { data: tanzakus } = useAsyncData('tanzakus', () => setting.isReady.value ? Promise.all(tanzakuIds.value.map((i) => $fetch(`/api/v1/images/tanzaku/${i}`))) : Promise.resolve([]), {
-  immediate: true,
-  transform: res => res.map(addImageHeader),
-  watch: [setting.isReady],
-})
+const { data: tanzakus } = useAsyncData('tanzakus', () =>
+  setting.isReady.value && tanzakuIds.value.length === 5
+    ? Promise.all(tanzakuIds.value.map((i) => $fetch(`/api/v1/images/tanzaku/${i}`)))
+    : Promise.resolve([]),
+  {
+    immediate: false,
+    transform: res => res.map(r => r ? addImageHeader(r) : ''),
+    watch: [setting.isReady],
+  })
 </script>
