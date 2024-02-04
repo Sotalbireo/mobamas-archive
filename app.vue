@@ -12,7 +12,7 @@
       </template>
       <template #right>
         <k-link navbar @click="menu = true">
-          <img src="~/assets/imas_logo.svg" class="h-8 w-10 text-sky-600" />
+          <img src="~/assets/bnei/imas_logo.svg" class="h-8 w-10 text-sky-600" />
         </k-link>
       </template>
     </k-navbar>
@@ -41,7 +41,7 @@
           <ArrowPathIcon class="size-8 text-sky-600" />
         </k-link>
         <k-link toolbar @click="menu = true">
-          <img src="@/assets/imas_logo.svg" class="h-8 w-10 fill-sky-600" />
+          <img src="@/assets/bnei/imas_logo.svg" class="h-8 w-10 fill-sky-600" />
         </k-link>
       </k-toolbar>
     </footer>
@@ -64,7 +64,10 @@
   leave-to="opacity-0"
   class="fixed inset-0 h-dvh sm:h-screen w-dvw sm:w-screen z-50 flex items-center justify-center backdrop-blur bg-black/30 overscroll-none"
 >
-  <div><img src="~/assets/Nino_Loading_8.gif"></div>
+  <video autoplay loop muted playsinline>
+    <source src="~/assets/bnei/Nino_Loading_8.webm" type="video/webm" />
+    <img src="~/assets/bnei/Nino_Loading_8.gif" />
+  </video>
 </TransitionRoot>
 </template>
 
