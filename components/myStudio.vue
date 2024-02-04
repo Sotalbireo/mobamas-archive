@@ -3,17 +3,18 @@
   <div v-else class="mt-8" />
   <div class="relative">
     <ul class="grid grid-cols-5 list-none">
-      <li v-for="(slab, i) in slabs" :key="i" class="relative w-full h-auto">
+      <li v-for="(t, i) in tanzakus" :key="i" class="relative w-full h-auto">
         <a :class="slotId == i ? 'before:absolute before:inset-0 before:ring-8 before:ring-pink-500/70 before:ring-inset before:rounded' : ''" @click.prevent="onClickSlab(i)"
           ><img
-            v-if="slab"
-            :src="slab"
+            v-if="t"
+            :src="t"
             class="w-full h-auto"
         /></a>
       </li>
     </ul>
   </div>
   <img v-if="useOriginalBg" src="~/assets/bnei/bg_mypage_b.jpg" class="w-full">
+
   <TransitionRoot
     :show="slotId != -1"
     appear
@@ -37,8 +38,10 @@
       <ul
         class="grid grid-cols-4 gap-3 list-none max-h-72 overflow-y-auto pb-4"
       >
-        <li v-for="(t, i) in thumbs" :key="i">
-          <img :src="t" @click="onChangeSlab(slotId, i)" />
+        <li v-for="t in thumbs" :key="t[1]">
+          <a @click="onChangeSlab(slotId, t[0])">
+            <img :src="t[1]" />
+          </a>
         </li>
       </ul>
     </k-card>
@@ -46,19 +49,19 @@
 </template>
 
 <script lang="ts" setup>
-import { kCard, kLink } from 'konsta/vue'
 import { TransitionRoot } from '@headlessui/vue'
-import sample from 'lodash/sampleSize'
 import { XMarkIcon } from '@heroicons/vue/20/solid'
+import { until } from '@vueuse/core';
+import { kCard, kLink } from 'konsta/vue'
+import sample from 'lodash/sampleSize'
 
 const router = useRouter()
-const tanzaku = useTanzaku()
+const { list: tanzakuList } = useTanzaku()
 const { list: thumbList, blobs: thumbBlobs } = useThumbnail()
 const setting = useSetting()
 useAppTitle().value = ''
 
-const slabs = ref<string[]>([])
-const thumbs = computed(() => [...thumbBlobs.value.values()])
+const thumbs = computed(() => [...thumbBlobs.value.entries()])
 const slotId = ref(-1)
 
 const tanzakuIds = computed({
@@ -75,38 +78,35 @@ function onClickSlab(_slotId: number) {
   }
 }
 
-async function onChangeSlab(_slotId: number, thumbId: number) {
-  const newSlabId = thumbList.value![thumbId].substring(
-    thumbList.value![thumbId].indexOf('_') + 1
-  )
-  const newSlab = addImageHeader(
-    await $fetch<string>(`/api/v1/images/tanzaku/${newSlabId}`)
-  )
-  slabs.value.splice(_slotId, 1, newSlab)
-  tanzakuIds.value.splice(_slotId, 1, newSlabId)
+async function onChangeSlab(_slotId: number, thumbId: string) {
+  tanzakuIds.value = tanzakuIds.value.toSpliced(_slotId, 1, thumbId.replace(/^[0-9]+_/, ''))
   await router.replace({ hash: '#' + tanzakuIds.value.join(',') })
   slotId.value = -1
 }
 
 const hash = useRoute().hash.substring(1).split(',')
 
-if (hash.length === 5 && hash.every((v) => tanzaku.list.value.includes(v))) {
+if (hash.length === 5 && hash.every((v) => tanzakuList.value.includes(v))) {
   tanzakuIds.value = hash
-} else if (tanzakuIds.value.length === 5) {
-  tanzakuIds.value = tanzakuIds.value
-} else {
-  tanzakuIds.value = sample(tanzaku.list.value, 5)
+} else if (tanzakuIds.value.length !== 5) {
+  tanzakuIds.value = sample(tanzakuList.value, 5)
 }
 await router.replace({ hash: '#' + tanzakuIds.value.join(',') })
 
-slabs.value = await (
-  await Promise.all(
-    tanzakuIds.value.map((i) => $fetch(`/api/v1/images/tanzaku/${i}`))
-  )
-).map(addImageHeader)
-// thumbs.value = await (
-//   await Promise.all(
-//     thumbList.value!.map((i) => $fetch(`/api/v1/images/thumb/${i}`))
-//   )
-// ).map(addImageHeader)
+const { data: tanzakus } = await useAsyncData('tanzakus', () =>
+  setting.isReady.value && tanzakuIds.value.length === 5
+    ? Promise.all(tanzakuIds.value.map((i) => $fetch(`/api/v1/images/tanzaku/${i}`)))
+    : Promise.resolve([]),
+  {
+    immediate: true,
+    transform: res => res.map(r => r ? addImageHeader(r) : ''),
+    watch: [setting.isReady, tanzakuIds],
+  })
+
+watch(tanzakuList, () => {
+  if (tanzakuIds.value.length !== 5) {
+    tanzakuIds.value = sample(tanzakuList.value, 5)
+    router.replace({ hash: '#' + tanzakuIds.value.join(',') })
+  }
+})
 </script>

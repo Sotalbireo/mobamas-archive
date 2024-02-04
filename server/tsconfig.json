@@ -1,4 +1,10 @@
 {
   "extends": "../.nuxt/tsconfig.server.json",
-  "exclude": ["../*"]
+  "include": [
+    "../.nuxt/types/nitro-nuxt.d.ts",
+    "../node_modules/@nuxt/devtools/runtime/server",
+    "../node_modules/@nuxt/telemetry/runtime/server",
+    "./.nuxt/types/nitro.d.ts",
+    "../server/**/*"
+  ],
 }

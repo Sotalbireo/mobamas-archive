@@ -25,18 +25,16 @@
             当サイトは<NuxtLink
               to="https://www.bandainamcoent.co.jp/info/videopolicy/"
               target="_blank"
-              class="underline"
-            >
-              バンダイナムコエンターテインメントゲーム実況ポリシー </NuxtLink
+              class="underline px-0.5"
+            >バンダイナムコエンターテインメントゲーム実況ポリシー</NuxtLink
             >に準拠することを心がけています。
           </li>
           <li>
             当サイトに関するご意見ご要望、その他ご連絡などは、<NuxtLink
-              to="https://social.mikutter.hachune.net/sota_n"
+              to="https://imastodon.net/@absolute_zero"
               target="_blank"
-              class="underline"
-            >
-              @sota_n </NuxtLink
+              class="underline px-0.5"
+            >広報用Mastodonアカウント</NuxtLink
             >にお送りください。
           </li>
         </ul>

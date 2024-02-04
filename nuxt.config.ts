@@ -89,9 +89,8 @@ export default defineNuxtConfig({
       },
     },
   },
-  routeRules: {
-    '/': { ssr: false },
-  },
+  routeRules: {},
+  ssr: false,
   typescript: {
     typeCheck: true,
   },

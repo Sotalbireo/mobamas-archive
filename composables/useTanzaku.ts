@@ -1,12 +1,13 @@
 export function useTanzaku() {
   const list = useState<string[]>(() => [])
 
-  const fetch = async () => {
-    list.value = await useFetch('/api/v1/images/tanzaku').data.value ?? []
-  }
+  const asyncData = useAsyncData('tanzakuList', () => $fetch('/api/v1/images/tanzaku'), {
+    immediate: false,
+    transform: res => { list.value = res }
+  })
 
   return {
     list,
-    fetch,
+    fetch: asyncData.execute,
   }
 }
